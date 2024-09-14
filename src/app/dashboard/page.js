@@ -4,24 +4,37 @@ import { useState, useEffect } from 'react';
 
 export default function ProductCart() {
     const [products, setProducts] = useState([]);
+
     const [selectedProducts, setSelectedProducts] = useState({});
     const [totalPrice, setTotalPrice] = useState(0);
     const [purchaseLimit, setPurchaseLimit] = useState(0);
     const [userRole, setUserRole] = useState('');
     const [exceedsLimit, setExceedsLimit] = useState(false);
 
-    const customerId = localStorage.getItem('id');
+    const [customerId, setCustomerId] = useState('');
+
+    useEffect(() => {
+        const id = localStorage.getItem('id');
+        if (id) {
+            setCustomerId(id);
+        }
+    }, []);
 
     useEffect(() => {
         async function fetchData() {
             const productRes = await fetch(`/api/customer-products?customerId=${customerId}`);
             const productsData = await productRes.json();
-            setProducts(productsData.products);
 
-            setPurchaseLimit(productsData.customer.purchaseLimit);
-            setUserRole(productsData.customer.userRole);
+            if (productsData?.products) {
+                setProducts(productsData?.products);
+            }
+
+            setPurchaseLimit(productsData?.customer?.purchaseLimit);
+            setUserRole(productsData?.customer?.userRole);
         }
-        fetchData();
+        if (customerId) {
+            fetchData();
+        }
     }, [customerId]);
 
     const handleProductSelect = (productId, price) => {
@@ -53,6 +66,8 @@ export default function ProductCart() {
                 total += productTotal;
             }
         });
+        console.log('userRole', userRole);
+
 
         if (userRole === 'Regular') {
             total *= 0.90;
@@ -78,14 +93,14 @@ export default function ProductCart() {
                     </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                    {products.length === 0 ? (
+                    {products?.length === 0 ? (
                         <tr>
                             <td colSpan="4" className="py-4 px-6 text-center text-gray-500">
                                 No Products available
                             </td>
                         </tr>
                     ) : (
-                        products.map((product) => (
+                        products?.map((product) => (
                             <tr key={product._id} className="hover:bg-gray-50">
                                 <td className="px-6 py-2">
                                     <input
