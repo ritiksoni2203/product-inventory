@@ -81,7 +81,7 @@ export default function ProductCart() {
     };
 
     return (
-        <div className="container mx-auto py-8">
+        <div className="container mx-auto">
             <h1 className="text-2xl font-bold mb-6">Product Cart</h1>
             <table className="table-auto w-full mb-6">
                 <thead className="bg-gray-50">

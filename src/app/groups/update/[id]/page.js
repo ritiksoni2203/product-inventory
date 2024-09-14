@@ -52,7 +52,7 @@ export default function UpdateGroup() {
     };
 
     return (
-        <div className="container mx-auto px-4 py-8">
+        <div className="container mx-auto px-4">
             <h1 className="text-2xl font-bold mb-6 text-gray-800">Update Group</h1>
             
             <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md">

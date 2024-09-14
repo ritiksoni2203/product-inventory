@@ -44,7 +44,7 @@ export default function AddCustomer() {
   };
 
   return (
-    <div className="container mx-auto py-8">
+    <div className="container mx-auto">
       <h1 className="text-2xl font-bold mb-6">Add Customer</h1>
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md">
         <div className="mb-4">
